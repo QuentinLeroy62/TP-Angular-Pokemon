@@ -1,0 +1,32 @@
+<!-- Défintion du lecteur audio pour le cri du pokemon -->
+<audio autoplay="true" #audio>
+    <source src="assets/audio/{{pokemon.id}}.mp3" type="audio/mpeg">
+</audio> 
+
+<mat-card class="card">
+    <mat-grid-list cols="2" rowHeight="1:1">
+            <mat-grid-tile>
+                <img src="assets/img/official-artwork/{{pokemon.id}}.png" alt="Image pokemon {{pokemon.name}}" class="img">
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-list>
+                    <mat-list-item>{{pokemon.name}}<mat-icon aria-label="Play icon" (click)="audio.play()" id="playButton">play_circle_outline</mat-icon></mat-list-item>
+                    <mat-list-item>
+                            <mat-chip-list>
+                                    <mat-chip *ngFor="let type of pokemon.types">{{type}}</mat-chip>
+                            </mat-chip-list>
+                    </mat-list-item>        
+                    <mat-list-item>Taille : {{pokemon.height | number : "1.1"}} m</mat-list-item>
+                    <mat-list-item>Poids : {{pokemon.weight | number : "1.1"}} kg</mat-list-item>
+                </mat-list>    
+            </mat-grid-tile>
+    </mat-grid-list>
+
+    <div id="num">No. : {{pokemon.id | number : "3.0"}}</div>
+    <div id="blank"></div>
+    <div id="desc" >{{pokemon.description}}</div>
+    <mat-icon aria-label="Back icon" (click)="goBack()" id="backButton">subdirectory_arrow_left</mat-icon>
+</mat-card>
+
+
+
