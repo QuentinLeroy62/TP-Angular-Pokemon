@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Pokemon } from '../models/pokemon.model';
 import { PokemonService } from '../services/pokemon.service';
 
@@ -12,6 +12,7 @@ const NB_POKEMONS_TO_RETRIEVE: number = 20;
 export class PokemonListComponent implements OnInit {
 
   pokemons:Array<Pokemon> = [];
+  @Output() pokemonOut = new EventEmitter<Pokemon>();
 
   constructor(private pokemonService: PokemonService) { }
 
@@ -31,9 +32,12 @@ export class PokemonListComponent implements OnInit {
     this.getPokemons();
   }
 
+  onClick(pokemon:Pokemon){
+    this.pokemonOut.emit(pokemon);
+  }
+
   ngOnInit() {
     //Recup de tous les pokemons
     this.getPokemons();
   }
-
 }

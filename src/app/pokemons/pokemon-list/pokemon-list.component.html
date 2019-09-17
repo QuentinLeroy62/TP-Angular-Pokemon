@@ -1,9 +1,14 @@
 <h2>My Heroes</h2>
 <mat-nav-list infiniteScroll fromRoot (scrolled)="onScroll()">
     <mat-list >
-        <mat-list-item *ngFor="let pokemon of pokemons">
+        <mat-list-item *ngFor="let pokemon of pokemons" (click)="onClick(pokemon)">
             <img matListAvatar src="assets/img/sprites/{{pokemon.id}}.png" alt="Image pokemon {{pokemon.name}}">
-            <h3 matLine routerLink="/detail/{{pokemon.id}}">{{pokemon.id}}.{{pokemon.name}}</h3>
+            <h3 matLine>{{pokemon.id}}.{{pokemon.name}}</h3>
         </mat-list-item>
     </mat-list>
-</mat-nav-list>
+</mat-nav-list> 
+
+
+<!-- <mat-list-item *ngFor="let pokemon of pokemons" routerLink="/detail/{{pokemon.id}}"> -->
+
+    <!-- https://levelup.gitconnected.com/angular-7-share-component-data-with-other-components-1b91d6f0b93f -->
