@@ -21,6 +21,7 @@ const EMPTY_PAGED_DATA = {
 export class PokemonService {
 
   private pokemonUrl:string = 'http://app-ec21e68e-3e55-42d7-b1ae-3eef7507a353.cleverapps.io';
+  //private pokemonUrl:string = 'http://51.75.122.159:3000';
 
   constructor(private pokemonService: PokemonService, private http: HttpClient) { }
 
@@ -32,6 +33,12 @@ export class PokemonService {
     );
   }*/
 
+  getPokemon(id: number): Observable<Pokemon> {
+    const url : string = this.pokemonUrl+'/pokemons/'+id;
+    return this.http.get<Pokemon>(url).pipe(
+      catchError(this.handleError<Pokemon>(`getPokemon id=${id}`, null)));
+  }
+
   //Récupération de nb_pokemons à partir de l'offset
   getPokemons(offset: number, nb_pokemons: number ): Observable<PagedData<Pokemon>> {
     const url : string = this.pokemonUrl+'/pokemons?limit='+nb_pokemons+'&offset='+offset;
@@ -40,10 +47,12 @@ export class PokemonService {
     );
   }
 
-  getPokemon(id: number): Observable<Pokemon> {
-    const url : string = this.pokemonUrl+'/pokemons/'+id;
-    return this.http.get<Pokemon>(url).pipe(
-      catchError(this.handleError<Pokemon>(`getPokemon id=${id}`, null)));
+  //Récupération des pokemons matchant avec le parm de recherche
+  getPokemonSearch(searchParam: string): Observable<PagedData<Pokemon>> {
+    const url : string = this.pokemonUrl+'/pokemons?search='+searchParam;
+    return this.http.get<PagedData<Pokemon>>(url).pipe(
+      catchError(this.handleError<PagedData<Pokemon>>('getPokemons', EMPTY_PAGED_DATA))     
+    );
   }
 
   private handleError<T> (operation = 'operation', result?: T) {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Pokemon } from '../models/pokemon.model';
 import { PokemonService } from '../services/pokemon.service';
 
@@ -12,6 +12,7 @@ const NB_POKEMONS_TO_RETRIEVE: number = 20;
 export class PokemonListComponent implements OnInit {
 
   pokemons:Array<Pokemon> = [];
+  searchValue : string;
   @Output() pokemonOut = new EventEmitter<Pokemon>();
 
   constructor(private pokemonService: PokemonService) { }
@@ -28,12 +29,28 @@ export class PokemonListComponent implements OnInit {
 		});
   }
 
+  //Récupère les pokemons avec param de recherche
+  getPokemonsSearch(){
+    this.pokemonService.getPokemonSearch(this.searchValue).subscribe(myResult => this.pokemons = myResult.data);
+  }
+
   onScroll() {
     this.getPokemons();
   }
 
   onClick(pokemon:Pokemon){
     this.pokemonOut.emit(pokemon);
+  }
+
+  searchChange(){
+    if(this.searchValue != ""){
+      this.getPokemonsSearch();
+    }
+    else{
+      this.pokemons = [];
+      this.getPokemons();
+    } 
+      
   }
 
   ngOnInit() {
