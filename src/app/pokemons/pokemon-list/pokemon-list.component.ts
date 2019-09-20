@@ -42,15 +42,17 @@ export class PokemonListComponent implements OnInit {
     this.pokemonOut.emit(pokemon);
   }
 
+  //Déclencher sur onKeyUp
   searchChange(){
+    //Si recherche 
     if(this.searchValue != ""){
       this.getPokemonsSearch();
     }
+    //Pas de recherche
     else{
       this.pokemons = [];
       this.getPokemons();
-    } 
-      
+    }   
   }
 
   ngOnInit() {
