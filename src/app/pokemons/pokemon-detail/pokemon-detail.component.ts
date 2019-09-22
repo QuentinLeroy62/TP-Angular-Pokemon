@@ -3,7 +3,6 @@ import { Pokemon } from '../models/pokemon.model';
 import { ActivatedRoute } from '@angular/router';
 import { PokemonService } from '../services/pokemon.service';
 import { Location } from '@angular/common';
-import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
 
 @Component({
   selector: 'app-pokemon-detail',
@@ -12,25 +11,48 @@ import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrie
 })
 export class PokemonDetailComponent implements OnChanges {
 
+  //The pokemon selected
   @Input() pokemon: Pokemon;
 
   constructor(private route: ActivatedRoute, 
     private pokemonService: PokemonService,
     private location: Location) { }
 
-  getPokemon(){
-    //const id: number = +this.route.snapshot.paramMap.get('id');
-    this.pokemonService.getPokemon(this.pokemon.id).subscribe(myResult => this.pokemon = myResult);
-  }
-
-  goBack(){
-    this.location.back();
-  }
-
-  //Détecte le changement sur l'input et vérifie que le pokemon est définie
+  /**
+   * Detects a change on the input and check that the pokemon is set
+   * @param changes 
+   */
   ngOnChanges(changes: SimpleChanges): void {
     if(changes.pokemon && typeof(this.pokemon) != "undefined"){
       this.getPokemon();
+      this.playAudio();
     }
   }
+
+  /**
+   * Get the detail of the selected pokemon
+   */
+  getPokemon(){
+    /** No more necessary with side-by-side display
+    const id: number = +this.route.snapshot.paramMap.get('id'); */
+    this.pokemonService.getPokemon(this.pokemon.id).subscribe(myResult => this.pokemon = myResult);
+  }
+
+  /**
+   * Play the pokemon sound
+   */
+  playAudio(){
+    let audio = new Audio();
+    audio.src = `assets/audio/${this.pokemon.id}.mp3`;
+    audio.load();
+    audio.play();
+  }
+
+  /**
+   * Navigate to the previous page
+   * No more necessary with side-by-side display
+   */
+  goBack(){
+    this.location.back();
+  } 
 }
