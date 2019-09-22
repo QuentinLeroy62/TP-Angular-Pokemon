@@ -1,9 +1,13 @@
 <h2>My Heroes</h2>
-<mat-nav-list infiniteScroll fromRoot (scrolled)="onScroll()">
-    <mat-list >
-        <mat-list-item *ngFor="let pokemon of pokemons">
+<mat-form-field class="inputSearch">
+    <input matInput type="search" [(ngModel)]="searchValue" placeholder="Type a name or a number" (keyup)="searchChange()">
+</mat-form-field>
+
+<mat-nav-list infiniteScroll [scrollWindow]="false" (scrolled)="onScroll()" class="mat-nav-list">
+    <mat-list>
+        <mat-list-item *ngFor="let pokemon of pokemons" (click)="onClick(pokemon)">
             <img matListAvatar src="assets/img/sprites/{{pokemon.id}}.png" alt="Image pokemon {{pokemon.name}}">
-            <h3 matLine routerLink="/detail/{{pokemon.id}}">{{pokemon.id}}.{{pokemon.name}}</h3>
+            <h3 matLine>{{pokemon.id | number : "3.0"}}.{{pokemon.name}}</h3>
         </mat-list-item>
     </mat-list>
-</mat-nav-list>
+</mat-nav-list> 

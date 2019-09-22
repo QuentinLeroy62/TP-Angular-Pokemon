@@ -4,10 +4,7 @@ import { Pokemon } from '../models/pokemon.model';
 import { PagedData } from '../models/paged-data.model';
 import { of, Observable } from 'rxjs';
 import { catchError, tap} from 'rxjs/operators';
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+import { environment } from 'src/environments/environment';
 
 const EMPTY_PAGED_DATA = {
   data: [],
@@ -20,19 +17,16 @@ const EMPTY_PAGED_DATA = {
 })
 export class PokemonService {
 
-  private pokemonUrl:string = 'http://app-ec21e68e-3e55-42d7-b1ae-3eef7507a353.cleverapps.io';
+  //URL is defined in the environment
+  pokemonUrl: string = `${environment.apiUrl}`;
 
   constructor(private pokemonService: PokemonService, private http: HttpClient) { }
 
-  /* Fonction servant à la récupération des pokemons sans le scroll infini
-  getPokemons(): Observable<PagedData<Pokemon>> {
-    const url : string = this.pokemonUrl+'/pokemons';
-    return this.http.get<PagedData<Pokemon>>(url).pipe(
-      catchError(this.handleError<PagedData<Pokemon>>('getPokemons', EMPTY_PAGED_DATA))     
-    );
-  }*/
-
-  //Récupération de nb_pokemons à partir de l'offset
+  /**
+   * Get nb_pokemons from the offset
+   * @param offset 
+   * @param nb_pokemons 
+   */
   getPokemons(offset: number, nb_pokemons: number ): Observable<PagedData<Pokemon>> {
     const url : string = this.pokemonUrl+'/pokemons?limit='+nb_pokemons+'&offset='+offset;
     return this.http.get<PagedData<Pokemon>>(url).pipe(
@@ -40,24 +34,54 @@ export class PokemonService {
     );
   }
 
+  /**
+   * Get one pokemon 
+   * @param id
+   */
   getPokemon(id: number): Observable<Pokemon> {
     const url : string = this.pokemonUrl+'/pokemons/'+id;
     return this.http.get<Pokemon>(url).pipe(
       catchError(this.handleError<Pokemon>(`getPokemon id=${id}`, null)));
   }
 
+  /**
+   * Get all pokemon which match with the search
+   * @param searchParam 
+   */
+  getPokemonSearch(searchParam: string): Observable<PagedData<Pokemon>> {
+    const url : string = this.pokemonUrl+'/pokemons?search='+searchParam;
+    return this.http.get<PagedData<Pokemon>>(url).pipe(
+      catchError(this.handleError<PagedData<Pokemon>>('getPokemons', EMPTY_PAGED_DATA))     
+    );
+  }
+
+  /**
+   * Get all id of the pokemon in the user team
+   */
+  getPokemonIdTeam(): Observable<number[]>{
+    const url : string = this.pokemonUrl+'/trainers/me/team';
+    return this.http.get<number[]>(url);
+  }
+
+  /**
+   * Replace the user team by the new one
+   * @param idPokemons 
+   */
+  setMyTeam(idPokemons: number[]){
+    const url : string = this.pokemonUrl+'/trainers/me/team';
+    return this.http.put<any>(url, idPokemons);
+  }
+
+  /**
+   * Handle the errors on the request
+   * @param operation 
+   * @param result 
+   */
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-  
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-  
-      // TODO: better job of transforming error for user consumption
+      console.error(error);
       console.error(`${operation} failed: ${error.message}`);
-  
-      // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }
-
 }

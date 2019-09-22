@@ -1,0 +1,44 @@
+.mat-drawer-container{
+    height: 100%;
+}
+
+.list-container{
+    width: 25%;
+}
+
+.content{
+    padding-left: 25%;
+}
+
+.img{
+    max-width: 4%;
+    height: auto;
+}
+
+#title{
+    padding-left: 20px;
+    color: rgb(55,102,172);
+}
+
+#goTeam{
+    font-size: 30px;
+    margin-left:65%;
+    color: rgb(55,102,172);
+}
+
+#notGoTeam{
+    font-size: 30px;
+    color: grey;
+    margin-left:64%;
+}
+
+#login{
+    font-size: 30px;
+    margin-left:2%;
+    color: rgb(55,102,172);
+}
+
+.toolBar{
+    //background-color: rgb(236,26,35);
+    background-color: rgb(254,229,51);
+}

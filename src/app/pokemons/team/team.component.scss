@@ -1,0 +1,58 @@
+h2{
+    margin-left: 45%;
+    border: 3px solid white;
+    border-radius: 20px;
+    padding : 10px;
+    width: 110px;
+}
+
+.mat-list{
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+}
+
+#teamEmpty{
+    font-size: 17px;
+    margin-left: 34%;
+    margin-top: 1%;
+}
+
+#playButton{
+    margin-right: 25%;
+}
+
+#deleteButton{
+    margin-right: 2%;
+    color:red;
+}
+
+#addButton{
+    margin-left: 50%;
+    padding-top: 10px;
+}
+
+#inputSearch{
+    margin-top: 10px;
+    margin-left:40%;
+}
+
+#saveButton{
+    margin-left: 5%;
+    color:green;
+    font-size: 30px;
+}
+
+#backHome{
+    margin-top: 2%;
+    margin-left: 47%;
+    font-size: 20px;
+}
+
+.mat-nav-list{
+    overflow:auto;
+    max-height: 100%;
+    max-width: 30%;
+    margin-left:auto;
+    margin-right:auto;
+}

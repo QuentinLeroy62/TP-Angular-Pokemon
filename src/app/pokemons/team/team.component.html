@@ -1,0 +1,33 @@
+<h2>My Team</h2>
+
+<mat-list class="mat-list">
+    <p *ngIf="pokemonsTeam.length == 0" id="teamEmpty">Your team is empty!</p>
+    <mat-list-item *ngFor="let pokemon of pokemonsTeam">
+        <audio preload="false" #audio>
+            <source src="assets/audio/{{pokemon.id}}.mp3" type="audio/mpeg">
+        </audio> 
+        <img matListAvatar src="assets/img/sprites/{{pokemon.id}}.png" alt="Image pokemon {{pokemon.name}}">
+        <h3 matLine>{{pokemon.id | number : "3.0"}} - {{pokemon.name}}</h3>
+        <mat-icon aria-label="Play icon" (click)="audio.play()" id="playButton">play_circle_outline</mat-icon>
+        <mat-icon aria-label="Delete" (click)="delete(pokemon)" id="deleteButton">delete_forever</mat-icon>
+        <mat-divider></mat-divider>
+    </mat-list-item>
+</mat-list>
+
+<input type="button" id="backHome" value="Back to home" (click)="backHome()">
+
+<mat-icon aria-label="Add Circle" (click)="deployList()" id="addButton">{{iconList}}</mat-icon>
+<div *ngIf="displayList">
+    <mat-form-field id="inputSearch">
+            <input matInput type="search" [(ngModel)]="searchValue" placeholder="Type a name or a number" (keyup)="searchChange()">
+    </mat-form-field>
+
+    <mat-icon aria-label="Save" (click)="saveChanges(pokemon)" id="saveButton">person_add</mat-icon>
+
+    <mat-selection-list infiniteScroll [scrollWindow]="true" (scrolled)="onScroll()" class="mat-nav-list" #pokemon>
+            <mat-list-option *ngFor="let pokemon of pokemonsList" value={{pokemon.id}}>
+                <img matListAvatar src="assets/img/sprites/{{pokemon.id}}.png" alt="Image pokemon {{pokemon.name}}">
+                <h3 matLine>{{pokemon.id | number : "3.0"}}.{{pokemon.name}}</h3>
+            </mat-list-option>
+    </mat-selection-list>
+</div>

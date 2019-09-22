@@ -1,0 +1,14 @@
+<mat-toolbar class='toolBar' role="heading">
+    <mat-toolbar-row>
+      <img src="assets/img/icon/logo.png" alt="Logo pokemon" class="img">
+      <span id="title">Welcome to the Pokemon App</span>
+      <mat-icon *ngIf="isLogIn" id="goTeam" aria-label="Team" (click)="goTeam()">people</mat-icon>
+      <mat-icon *ngIf="!isLogIn" id="notGoTeam" aria-label="Team">people</mat-icon>
+      <mat-icon id="login" aria-label="Login" (click)="clickPad()">{{loginIcon}}</mat-icon>
+    </mat-toolbar-row>
+</mat-toolbar>
+  
+<mat-drawer-container class="mat-drawer-container"> 
+    <mat-drawer opened="true" disableClose="true" mode="side" class="list-container"><app-pokemon-list (pokemonOut)="onClick($event)"></app-pokemon-list></mat-drawer>
+    <mat-drawer-content class="content"><app-pokemon-detail [pokemon]="pokemonSelect"></app-pokemon-detail></mat-drawer-content>
+</mat-drawer-container>

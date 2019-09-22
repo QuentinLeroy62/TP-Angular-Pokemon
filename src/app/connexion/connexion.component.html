@@ -1,0 +1,18 @@
+<h2>Connection</h2>
+<form class="form-container">
+    <mat-form-field>
+        <input matInput type="email" placeholder="Pseudo" required #email>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Password" required [type]="hide ? 'password' : 'text'" #password>
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+    </mat-form-field>
+
+    <mat-icon type="submit" aria-label="Submit" id="submitButton" (click)="onSubmit(email.value,password.value)">verified_user</mat-icon>    
+</form>
+<input type="submit" id="createAccount" value="Create an account" (click)="createAccount(email.value,password.value)">
+<input type="button" id="backHome" value="Back to home" (click)="backHome()">
+
